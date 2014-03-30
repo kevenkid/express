@@ -15,6 +15,11 @@ public class Deal
 
     public String code;
 
+    public static Byte ACTIVE = 0;
+    public static Byte FINISHED = 1;
+    public static Byte TERMINATED = -1;
+    public Byte status;
+
     public List<Checkout> checkouts;
 
   // CONSTRUCT
@@ -32,6 +37,7 @@ public class Deal
         this();
 
         this.code = code;
+        this.status = ACTIVE;
 
         return;
     }

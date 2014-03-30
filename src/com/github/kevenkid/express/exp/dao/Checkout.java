@@ -12,7 +12,7 @@ public class Checkout
     public static final long serialVersionUID = 1L;
 
   // FIELD
-    public Integer id;
+    public Long id;
 
     public Date checktime;
     public User checker;

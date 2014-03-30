@@ -17,6 +17,15 @@ import javax.servlet.http.HttpSession;
  */
 public class HttpUtil
 {
+    public static Object notNull(Object o)
+        throws MissinParameterException
+    {
+        if (o==null)
+            throws(new MissingParameterException());
+
+        return(o);
+    }
+
     /**
      * 从 HTTP 请求中检出相应参数值的简便封装
      *

@@ -3,7 +3,7 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping default-access="field">
-    <class name="com.github.kevenkid.express.users.dao.User" table="user">
+    <class name="com.github.kevenkid.express.users.dao.User" table="users_user">
         <id	name="id" type="int">
             <generator class="identity"/>
         </id>

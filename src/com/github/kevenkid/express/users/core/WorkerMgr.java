@@ -14,45 +14,45 @@ public class WorkerMgr
     }
 
   // C
-    public static void create(Worker e)
+    public static void create(Worker w)
     {
-        HiberDao.save(e);
+        HiberDao.save(w);
 
         return;
     }
 
     public static Worker create()
     {
-        Worker e = new Worker();
-        HiberDao.save(e);
+        Worker w = new Worker();
+        HiberDao.save(w);
 
-        return(e);
+        return(w);
     }
 
     public static Worker create(String name, String pass)
     {
-        Worker e = new Worker(name, pass);
-        HiberDao.save(e);
+        Worker w = new Worker(name, pass);
+        HiberDao.save(w);
 
-        return(e);
+        return(w);
     }
 
   // U
-    public static void update(Worker e)
+    public static void update(Worker w)
     {
-        HiberDao.update(e);
+        HiberDao.update(w);
     }
 
   // D
     public static void delete(Integer id)
         throws EntityNotFoundException
     {
-        Worker e = get(id);
-        if (e == null)
+        Worker w = get(id);
+        if (w == null)
             throw(new EntityNotFoundException("entity not found: "+Worker.class.getName()+"(id="+id+")"));
 
         //else
-        HiberDao.delete(e);
+        HiberDao.delete(w);
 
         return;
     }

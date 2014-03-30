@@ -14,45 +14,45 @@ public class AdminMgr
     }
 
   // C
-    public static void create(Admin e)
+    public static void save(Admin a)
     {
-        HiberDao.save(e);
+        HiberDao.save(a);
 
         return;
     }
 
     public static Admin create()
     {
-        Admin e = new Admin();
-        HiberDao.save(e);
+        Admin a = new Admin();
+        HiberDao.save(a);
 
-        return(e);
+        return(a);
     }
 
     public static Admin create(String name, String pass)
     {
-        Admin e = new Admin(name, pass);
-        HiberDao.save(e);
+        Admin a = new Admin(name, pass);
+        HiberDao.save(a);
 
-        return(e);
+        return(a);
     }
 
   // U
-    public static void update(Admin e)
+    public static void update(Admin a)
     {
-        HiberDao.update(e);
+        HiberDao.update(a);
     }
 
   // D
     public static void delete(Integer id)
         throws EntityNotFoundException
     {
-        Admin e = get(id);
-        if (e == null)
+        Admin a = get(id);
+        if (a == null)
             throw(new EntityNotFoundException("entity not found: "+Admin.class.getName()+"(id="+id+")"));
 
         //else
-        HiberDao.delete(e);
+        HiberDao.delete(a);
 
         return;
     }
