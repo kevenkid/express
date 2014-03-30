@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="GBK"?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping default-access="field">
+    <class name="com.github.kevenkid.express.users.dao.User" table="user">
+        <id	name="id" type="int">
+            <generator class="identity"/>
+        </id>
+        <discriminator column="utype" type="string" length="32" />
+
+        <property name="name" type="string" unique="true" length="32"/>
+        <property name="pass" type="string" length="32"/>
+
+        <subclass name="com.github.kevenkid.express.users.dao.Admin" discriminator-value="Admin">
+        </subclass>
+        <subclass name="com.github.kevenkid.express.users.dao.Worker" discriminator-value="Worker">
+        </subclass>
+    </class>
+</hibernate-mapping>
