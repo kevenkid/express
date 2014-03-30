@@ -140,5 +140,24 @@
   </target>
 
   <!-- 工具集 -->
+  <target name="add-admin" description="创建一个管理员">
+    <property name="run.main" value="com.github.kevenkid.express.test.AddAdminCLI" />
+    <antcall target="run" />
+  </target>
+
+  <target name="remove-admin" description="删除管理员">
+    <property name="run.main" value="com.github.kevenkid.express.test.RemoveAdminCLI" />
+    <antcall target="run" />
+  </target>
+
+  <target name="add-worker" description="创建一个快递员">
+    <property name="run.main" value="com.github.kevenkid.express.test.AddWorkerCLI" />
+    <antcall target="run" />
+  </target>
+
+  <target name="remove-worker" description="删除快递员">
+    <property name="run.main" value="com.github.kevenkid.express.test.RemoveWorkerCLI" />
+    <antcall target="run" />
+  </target>
 
 </project>

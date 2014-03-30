@@ -1,0 +1,26 @@
+# built application files
+*.apk
+*.ap_
+
+# files for the dex VM
+*.dex
+
+# Java class files
+*.class
+
+# MySQL Database
+# data
+
+# compiled
+web/WEB-INF/classes/*
+
+# javadoc
+# Not staged as they are continuously changed.
+# You can use "ant javadoc -s" to create them from source code
+javadoc
+
+# temp/backup
+*.tmp
+*.bak
+
+# end code_by
