@@ -1,8 +1,11 @@
-package com.github.kevenkid.express.users.dao;
+package com.github.kevenkid.express.exp.dao;
 
 import java.io.Serializable;
+import java.util.Date;
 
-public class User
+import com.github.kevenkid.express.users.dao.User;
+
+public class Checkout
     implements Serializable
 {
   // SERIAL
@@ -10,23 +13,25 @@ public class User
 
   // FIELD
     public Integer id;
-    public String name;
-    public String pass;
+
+    public Date checktime;
+    public User checker;
+    //public String checkloc;
 
   // CONSTRUCT
-    public User()
+    public Checkout()
     {
         super();
 
         return;
     }
 
-    public User(String name, String pass)
+    public Checkout(User checker)
     {
         this();
 
-        this.name = name;
-        this.pass = pass;
+        this.checktime = new Date(System.currentTimeMillis());
+        this.checker = checker;
 
         return;
     }
@@ -51,10 +56,11 @@ public class User
         if (o==null || !this.getClass().equals(o.getClass()))
             return(false);
 
-        User u = (User)o;
+        Checkout c = (Checkout)o;
         return(
-            (this.id == u.id)
-            || (this.id.equals(u.id))
+            (this.id == c.id)
+            || (this.id.equals(c.id))
         );
     }
+
 }
