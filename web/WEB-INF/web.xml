@@ -17,6 +17,50 @@
   </servlet-mapping>
   -->
 
+  <!-- users -->
+    <filter>
+      <filter-name>UsersIsUserVerifier</filter-name>
+      <filter-class>com.github.kevenkid.express.users.filter.IsUserVerifier</filter-class>
+      <init-param>
+        <param-name>userIdParamName</param-name>
+        <param-value>uid</param-value>
+      </init-param>
+      <init-param>
+        <param-name>userPassParamName</param-name>
+        <param-value>pass</param-value>
+      </init-param>
+    </filter>
+  <!-- /users -->
+
+  <!-- parcel -->
+    <servlet>
+      <servlet-name>CheckoutParcel</servlet-name>
+      <servlet-class>com.github.kevenkid.express.parcel.servlet.CheckoutParcel</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>CheckoutParcel</servlet-name>
+      <url-pattern>/parcel/checkout</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+      <servlet-name>QueryParcel</servlet-name>
+      <servlet-class>com.github.kevenkid.express.parcel.servlet.QueryParcel</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>QueryParcel</servlet-name>
+      <url-pattern>/parcel/query</url-pattern>
+    </servlet-mapping>
+
+    <filter-mapping>
+      <filter-name>UsersIsUserVerifier</filter-name>
+      <!--
+        userIdParamName=uid
+        userPassParamName=pass
+      -->
+      <url-pattern>/parcel/checkout</url-pattern>
+    </filter-mapping>
+  <!-- /parcel -->
+
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>

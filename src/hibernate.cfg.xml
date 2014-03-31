@@ -52,12 +52,9 @@
 
     <!-- 映射持久类 -->
     <mapping resource="com/github/kevenkid/express/users/dao/User.hbm.xml" />
-    <!--
-    <mapping resource="com/github/kevenkid/express/users/dao/Operator.hbm.xml" />
 
-    <mapping resource="com/github/kevenkid/express/exp/dao/Deal.hbm.xml" />
-    <mapping resource="com/github/kevenkid/express/exp/dao/Checkout.hbm.xml" />
-    -->
+    <mapping resource="com/github/kevenkid/express/parcel/dao/Parcel.hbm.xml" />
+    <mapping resource="com/github/kevenkid/express/parcel/dao/Checkout.hbm.xml" />
 
   </session-factory>
 </hibernate-configuration>

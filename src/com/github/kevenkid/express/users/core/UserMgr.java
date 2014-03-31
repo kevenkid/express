@@ -1,6 +1,8 @@
 package com.github.kevenkid.express.users.core;
 
+import org.hibernate.criterion.*;
 import com.github.cuter44.util.dao.*;
+
 import com.github.kevenkid.express.users.dao.*;
 
 public class UserMgr
@@ -10,6 +12,16 @@ public class UserMgr
     {
         return(
             (User)HiberDao.get(User.class, id)
+        );
+    }
+
+    public static User get(String name)
+    {
+        return(
+            (User)HiberDao.get(
+                DetachedCriteria.forClass(User.class)
+                    .add(Restrictions.eq("name", name))
+            )
         );
     }
 

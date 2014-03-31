@@ -1,8 +1,10 @@
-package com.github.kevenkid.express.exp.core;
+package com.github.kevenkid.express.parcel.core;
 
 import com.github.cuter44.util.dao.*;
 
-import com.github.kevenkid.express.exp.dao.*;
+import com.github.kevenkid.express.parcel.dao.*;
+import com.github.kevenkid.express.users.dao.*;
+import com.github.kevenkid.express.users.core.*;
 
 public class CheckoutMgr
 {
@@ -28,6 +30,18 @@ public class CheckoutMgr
         return(c);
     }
 
+    public static Checkout create(Integer uid)
+    {
+        User u = UserMgr.get(uid);
+        if (u == null)
+            throw(new EntityNotFoundException());
+
+        Checkout c = new Checkout(u);
+
+        HiberDao.save(c);
+
+        return(c);
+    }
   // U
     public static void update(Checkout c)
     {

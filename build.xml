@@ -160,4 +160,9 @@
     <antcall target="run" />
   </target>
 
+  <target name="checkout" description="模拟一次扫描">
+    <property name="run.main" value="com.github.kevenkid.express.test.CheckoutCLI" />
+    <antcall target="run" />
+  </target>
+
 </project>

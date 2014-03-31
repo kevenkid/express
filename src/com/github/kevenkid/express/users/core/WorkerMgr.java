@@ -1,6 +1,8 @@
 package com.github.kevenkid.express.users.core;
 
+import org.hibernate.criterion.*;
 import com.github.cuter44.util.dao.*;
+
 import com.github.kevenkid.express.users.dao.*;
 
 public class WorkerMgr
@@ -10,6 +12,16 @@ public class WorkerMgr
     {
         return(
             (Worker)HiberDao.get(Worker.class, id)
+        );
+    }
+
+    public static Worker get(String name)
+    {
+        return(
+            (Worker)HiberDao.get(
+                DetachedCriteria.forClass(Worker.class)
+                    .add(Restrictions.eq("name", name))
+            )
         );
     }
 
@@ -56,5 +68,17 @@ public class WorkerMgr
 
         return;
     }
+
+  // X
+    public static boolean isWorker(Integer uid)
+        throws EntityNotFoundException
+    {
+        Worker w = get(uid);
+
+        return(
+            w!=null
+        );
+    }
+
 }
 

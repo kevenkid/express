@@ -1,4 +1,4 @@
-package com.github.kevenkid.express.exp.dao;
+package com.github.kevenkid.express.parcel.dao;
 
 import java.io.Serializable;
 import java.util.Date;

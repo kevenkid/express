@@ -1,6 +1,8 @@
 package com.github.kevenkid.express.users.core;
 
+import org.hibernate.criterion.*;
 import com.github.cuter44.util.dao.*;
+
 import com.github.kevenkid.express.users.dao.*;
 
 public class AdminMgr
@@ -10,6 +12,16 @@ public class AdminMgr
     {
         return(
             (Admin)HiberDao.get(Admin.class, id)
+        );
+    }
+
+    public static Admin get(String name)
+    {
+        return(
+            (Admin)HiberDao.get(
+                DetachedCriteria.forClass(Admin.class)
+                    .add(Restrictions.eq("name", name))
+            )
         );
     }
 
@@ -56,5 +68,17 @@ public class AdminMgr
 
         return;
     }
+
+  // X
+    public static boolean isAdmin(Integer uid)
+        throws EntityNotFoundException
+    {
+        Admin a = get(uid);
+
+        return(
+            a!=null
+        );
+    }
+
 }
 

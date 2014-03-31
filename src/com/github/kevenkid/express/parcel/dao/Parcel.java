@@ -1,10 +1,10 @@
-package com.github.kevenkid.express.exp.dao;
+package com.github.kevenkid.express.parcel.dao;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.ArrayList;
 
-public class Deal
+public class Parcel
     implements Serializable
 {
   // SERIAL
@@ -23,7 +23,7 @@ public class Deal
     public List<Checkout> checkouts;
 
   // CONSTRUCT
-    public Deal()
+    public Parcel()
     {
         super();
 
@@ -32,7 +32,7 @@ public class Deal
         return;
     }
 
-    public Deal(String code)
+    public Parcel(String code)
     {
         this();
 
@@ -62,7 +62,7 @@ public class Deal
         if (o==null || !this.getClass().equals(o.getClass()))
             return(false);
 
-        Deal d = (Deal)o;
+        Parcel d = (Parcel)o;
         return(
             (this.id == d.id)
             || (this.id.equals(d.id))

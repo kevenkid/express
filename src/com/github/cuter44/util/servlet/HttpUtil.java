@@ -18,10 +18,10 @@ import javax.servlet.http.HttpSession;
 public class HttpUtil
 {
     public static Object notNull(Object o)
-        throws MissinParameterException
+        throws MissingParameterException
     {
         if (o==null)
-            throws(new MissingParameterException());
+            throw(new MissingParameterException());
 
         return(o);
     }

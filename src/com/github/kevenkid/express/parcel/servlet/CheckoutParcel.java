@@ -1,4 +1,4 @@
-package com.github.kevenkid.express.exp.servlet;
+package com.github.kevenkid.express.parcel.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -10,16 +10,13 @@ import com.github.cuter44.util.dao.*;
 import com.github.cuter44.util.servlet.*;
 import com.alibaba.fastjson.*;
 
-import com.github.kevenkid.express.users.dao.*;
-import com.github.kevenkid.express.users.core.*;
-import com.github.kevenkid.express.exp.dao.*;
-import com.github.kevenkid.express.exp.core.*;
+import com.github.kevenkid.express.parcel.core.*;
 
 /** 扫单
  * <pre style="font-size:12px">
 
    <strong>请求</strong>
-   POST /exp/checkout
+   POST /parcel/checkout
 
    <strong>参数</strong>
    code:string, 必需, 单号
@@ -40,23 +37,12 @@ import com.github.kevenkid.express.exp.core.*;
  * </pre>
  *
  */
-public class CheckoutDeal extends HttpServlet
+public class CheckoutParcel extends HttpServlet
 {
     private static final String FLAG = "flag";
     private static final String CODE = "code";
     private static final String FINISH = "finish";
     private static final String UID = "uid";
-
-    private static JSONObject jsonize(Book b)
-    {
-        JSONObject json = new JSONObject();
-
-        json.put(ID, b.getId());
-        json.put(ISBN, b.getIsbn());
-        json.put(OWNER, b.getOwner().getId());
-
-        return(json);
-    }
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -75,32 +61,27 @@ public class CheckoutDeal extends HttpServlet
 
         try
         {
-            String  code = (String) HttpUtil.notNull(HttpUtil.getParam(req, CODE));
-            Integer uid  = (Integer)HttpUtil.notNull(HttpUtil.getIntParam(req, UID));
+            String  code   = (String) HttpUtil.notNull(HttpUtil.getParam(req, CODE));
+            Integer uid    = (Integer)HttpUtil.notNull(HttpUtil.getIntParam(req, UID));
+
+            Boolean finish = HttpUtil.getBooleanParam(req, FINISH);
+            finish = (finish!=null ? finish : Boolean.FALSE);
 
             HiberDao.begin();
 
-            User u = (User)HttpUtil.notNull(UserMgr.get(uid));
-
-            Checkout c = CheckoutMgr.create(u);
-
-            Deal d = DealMgr.get(code);
-            if (d == null)
-                d = DealMgr.create(code);
-            if (!Deal.ACTIVE.equals(d.status))
-                throws(new IllegalStatusException());
-
-            d.checkouts.add(c);
+            ParcelController.checkout(code, uid, finish);
 
             HiberDao.commit();
-
-            JSONObject json = jsonize(d);
-            out.println(json.toJSONString());
         }
         catch (IllegalStateException ex)
         {
             resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
             out.println("{\"flag\":\"!status\"}");
+        }
+        catch (EntityNotFoundException ex)
+        {
+            resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            out.println("{\"flag\":\"!notfound\"}");
         }
         catch (MissingParameterException ex)
         {

@@ -3,16 +3,17 @@
 	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping default-access="field">
-    <class name="com.github.kevenkid.express.exp.dao.Deal" table="exp_deal">
+    <class name="com.github.kevenkid.express.parcel.dao.Parcel" table="parcel_parcel">
         <id	name="id" type="int">
             <generator class="identity"/>
         </id>
 
         <property name="code" type="string" length="32" unique="true"/>
         <property name="status" type="byte" />
-        <list name="checkouts">
-          <key column="belong"/>
-          <one-to-many class="com.github.kevenkid.express.exp.dao.Checkout" />
+        <list name="checkouts" cascade="all" >
+          <key column="deal_id"/>
+          <index column="check_in_deal" type="integer"/>
+          <one-to-many class="com.github.kevenkid.express.parcel.dao.Checkout" />
         </list>
     </class>
 </hibernate-mapping>
