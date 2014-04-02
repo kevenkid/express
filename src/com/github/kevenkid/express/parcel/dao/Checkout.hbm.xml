@@ -10,5 +10,6 @@
 
         <many-to-one name="checker" class="com.github.kevenkid.express.users.dao.User" cascade="none" lazy="false" />
         <property name="checktime" type="timestamp" />
+        <property name="action" type="string" length="32" />
     </class>
 </hibernate-mapping>

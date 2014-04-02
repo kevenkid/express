@@ -30,4 +30,15 @@ public class AuthController
         );
     }
 
+    public static boolean verifyAdminUidPass(Integer uid, String pass)
+        throws EntityNotFoundException
+    {
+        Admin a = AdminMgr.get(uid);
+        if (a == null)
+            throw(new EntityNotFoundException());
+
+        return(
+            a.pass==pass || a.pass.equals(pass)
+        );
+    }
 }

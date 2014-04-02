@@ -1,4 +1,4 @@
-package com.github.kevenkid.express.parcel.servlet;
+package com.github.kevenkid.express.users.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,42 +9,41 @@ import javax.servlet.ServletException;
 import com.github.cuter44.util.dao.*;
 import com.github.cuter44.util.servlet.*;
 import com.alibaba.fastjson.*;
+import com.alibaba.fastjson.serializer.*;
 
-import com.github.kevenkid.express.parcel.core.*;
+import com.github.kevenkid.express.users.dao.User;
+import com.github.kevenkid.express.users.core.*;
 
-/** 扫单
+/** 登录
+ * 会将用户名和密码缓存在服务器上, 在接下来需要uid/pass的请求中, 不再需要这两个参数.
+ * 需要客户端允许 cookies
  * <pre style="font-size:12px">
 
    <strong>请求</strong>
-   POST /parcel/checkout
+   POST /users/login
 
    <strong>参数</strong>
-   code:string, 必需, 单号
-   finish:boolean, 可选, 为 true 时同时将快递单标记为完成状态
-   action:string, 可选, checkout 时的附注
-   <i>权限</i>
-   uid:int, 必需, 参数或服务器session存储, 操作人id, 必须是"快递员"以上的角色
-   pass:string, 必需, 参数或服务器session存储, 操作人密码
+   <i>鉴权</i>
+   uid:int, 用户id
+   pass:string, 密码
 
    <strong>响应</strong>
-   成功时返回 OK(200), 没有响应正文
-   成功且快递单号在第一次使用时将被自动创建
+   正确完成时返回 OK(200)
+   <i>Set-Cookie</i>
+   JSESSIONID:hex-string, 建立 session-id
 
    <strong>例外</strong>
-   凭据错误时返回 Unauthorized(401)
-   单据不是active状态时返回 Forbidden(403):{"flag":"!status"}
 
-   <strong>样例</strong>暂无
+   <strong>样例</strong>
+   无
  * </pre>
  *
  */
-public class CheckoutParcel extends HttpServlet
+public class Login extends HttpServlet
 {
     private static final String FLAG = "flag";
-    private static final String CODE = "code";
-    private static final String ACTION = "action";
-    private static final String FINISH = "finish";
     private static final String UID = "uid";
+    private static final String PASS = "pass";
 
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -60,27 +59,20 @@ public class CheckoutParcel extends HttpServlet
         req.setCharacterEncoding("utf-8");
         resp.setContentType("application/json; charset=utf-8");
         PrintWriter out = resp.getWriter();
+        HttpSession session = req.getSession();
 
         try
         {
-            String  code   = (String) HttpUtil.notNull(HttpUtil.getParam(req, CODE));
-            Integer uid    = (Integer)HttpUtil.notNull(HttpUtil.getIntParam(req, UID));
-
-            String action  = HttpUtil.getParam(req, ACTION);
-
-            Boolean finish = HttpUtil.getBooleanParam(req, FINISH);
-            finish = (finish!=null ? finish : Boolean.FALSE);
+            Integer uid = (Integer)HttpUtil.notNull(HttpUtil.getIntParam(req, UID));
 
             HiberDao.begin();
 
-            ParcelController.checkout(code, action, uid, finish);
+            User u = (User)HttpUtil.notNull(UserMgr.get(uid));
 
             HiberDao.commit();
-        }
-        catch (IllegalStateException ex)
-        {
-            resp.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            out.println("{\"flag\":\"!status\"}");
+
+            session.setAttribute(UID, u.id);
+            session.setAttribute(PASS, u.pass);
         }
         catch (EntityNotFoundException ex)
         {

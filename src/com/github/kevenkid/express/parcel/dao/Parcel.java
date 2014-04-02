@@ -17,7 +17,7 @@ public class Parcel
 
     public static Byte ACTIVE = 0;
     public static Byte FINISHED = 1;
-    public static Byte TERMINATED = -1;
+    public static Byte DISABLED = -1;
     public Byte status;
 
     public List<Checkout> checkouts;

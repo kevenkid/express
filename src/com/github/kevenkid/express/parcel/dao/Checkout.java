@@ -16,6 +16,7 @@ public class Checkout
 
     public Date checktime;
     public User checker;
+    public String action;
     //public String checkloc;
 
   // CONSTRUCT
@@ -32,6 +33,15 @@ public class Checkout
 
         this.checktime = new Date(System.currentTimeMillis());
         this.checker = checker;
+
+        return;
+    }
+
+    public Checkout(User checker, String action)
+    {
+        this(checker);
+
+        this.action = action;
 
         return;
     }
@@ -62,5 +72,4 @@ public class Checkout
             || (this.id.equals(c.id))
         );
     }
-
 }

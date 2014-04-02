@@ -18,6 +18,15 @@
   -->
 
   <!-- users -->
+    <servlet>
+      <servlet-name>Login</servlet-name>
+      <servlet-class>com.github.kevenkid.express.users.servlet.Login</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>Login</servlet-name>
+      <url-pattern>/users/login</url-pattern>
+    </servlet-mapping>
+
     <filter>
       <filter-name>UsersIsUserVerifier</filter-name>
       <filter-class>com.github.kevenkid.express.users.filter.IsUserVerifier</filter-class>
@@ -30,6 +39,28 @@
         <param-value>pass</param-value>
       </init-param>
     </filter>
+
+    <filter>
+      <filter-name>UsersIsAdminVerifier</filter-name>
+      <filter-class>com.github.kevenkid.express.users.filter.IsAdminVerifier</filter-class>
+      <init-param>
+        <param-name>adminIdParamName</param-name>
+        <param-value>uid</param-value>
+      </init-param>
+      <init-param>
+        <param-name>adminPassParamName</param-name>
+        <param-value>pass</param-value>
+      </init-param>
+    </filter>
+
+    <filter-mapping>
+      <filter-name>UsersIsUserVerifier</filter-name>
+      <!--
+        userIdParamName=uid
+        userPassParamName=pass
+      -->
+      <url-pattern>/users/login</url-pattern>
+    </filter-mapping>
   <!-- /users -->
 
   <!-- parcel -->
@@ -51,6 +82,15 @@
       <url-pattern>/parcel/query</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+      <servlet-name>DisableParcel</servlet-name>
+      <servlet-class>com.github.kevenkid.express.parcel.servlet.DisableParcel</servlet-class>
+    </servlet>
+    <servlet-mapping>
+      <servlet-name>DisableParcel</servlet-name>
+      <url-pattern>/parcel/disable</url-pattern>
+    </servlet-mapping>
+
     <filter-mapping>
       <filter-name>UsersIsUserVerifier</filter-name>
       <!--
@@ -58,6 +98,15 @@
         userPassParamName=pass
       -->
       <url-pattern>/parcel/checkout</url-pattern>
+    </filter-mapping>
+
+    <filter-mapping>
+      <filter-name>UsersIsAdminVerifier</filter-name>
+      <!--
+        adminIdParamName=uid
+        adminPassParamName=pass
+      -->
+      <url-pattern>/parcel/disable</url-pattern>
     </filter-mapping>
   <!-- /parcel -->
 

@@ -42,6 +42,20 @@ public class CheckoutMgr
 
         return(c);
     }
+
+    public static Checkout create(Integer uid, String action)
+    {
+        User u = UserMgr.get(uid);
+        if (u == null)
+            throw(new EntityNotFoundException());
+
+        Checkout c = new Checkout(u);
+        c.action = action;
+
+        HiberDao.save(c);
+
+        return(c);
+    }
   // U
     public static void update(Checkout c)
     {
