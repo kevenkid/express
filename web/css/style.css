@@ -1,0 +1,68 @@
+#header {
+	width:800px; 
+	height:30px; 
+	margin:10px auto; 
+	background:#000000;
+}
+#header span {
+	float:right;
+	width:80px; 
+	height:30px; 
+	color:#FFFFFF; 
+	margin:0 30px; 
+	font-size:1.5em; 
+	text-align:center;
+	over-flow: hidden;
+}
+#header span:hover {
+	color:#0000FF; 
+	background:#FFFF00;
+	cursor:pointer;
+}
+#header button{
+	width:80px;
+}
+#login_table{
+	position:absolute;
+	width:300px;
+	background:#000000;
+	display:none;
+	color:#FFFFFF;
+	margin-top:30px;
+	margin-left:500px;
+}
+#login_table table th{
+	padding:5px 10px;
+}
+#content {
+	width:500px; 
+	height:600px; 
+	margin:10px auto;
+}
+#content_query, #content_result {
+	margin-top:10px;
+}
+#content_query button{
+	width:80px;
+	margin-left:10px; 
+}
+#query{
+	width:300px; 
+	margin:0px auto;
+}
+#result{
+	border:0;
+	border-collapse:collapse;
+	text-align:center; 
+	padding:5px 10px; 
+}
+#result th{ 
+	border-bottom:1px solid #333; 
+	padding:5px 10px; 
+}
+.table_even{
+	background:#FFF38F;
+}
+.table_odd{ 
+	background:#FFFFEE;
+}

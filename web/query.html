@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+	<title>伟和快运</title>
+	<link rel="stylesheet" href="css/style.css" type="text/css"/>
+	<script src="js/jquery-1.10.2.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="header">
+	<span id="login">登录</span>
+	<div id="login_table">
+	<table>
+		<tr>
+			<th>用户名</th>
+			<td><input type="text" id="username"></dt>
+		</tr>
+		<tr>
+			<th>密码</th>
+			<td><input type="password" id="password"></dt>
+		</tr>
+		<tr>
+			<th></th>
+			<td><button id="login_in" onclick="login()">确定</button></td>
+		</tr>
+	</table>
+	</div>
+</div>
+<div id="content">
+	<fieldset id="content_query">
+		<legend>请输入编号：</legend>
+		<input type="text" id="query"><button onclick="show();">确定</button>
+	</fieldset>
+	<br/>
+	<div id="content_result">
+		<p>查询结果：</p>
+	</div>
+</div>
+<script>
+$(function(){
+	$('#content_result').hide();
+	$('#login').click(function(e){
+		$('#login_table').slideToggle();
+	});
+});
+
+function login(){
+  $.get(
+    "users/login",
+    {
+      uid:$("input#username").val(),
+      pass:$("input#password").val()
+    }
+  ).done(/*here goes your callback */);
+}
+
+function show(){
+  $.get(
+    "parcel/query",
+    {code:$("input#query").val()}
+  ).done(
+    function(resp){
+      var str = new String();
+      str=str+"快递单号 "+resp.code+"<br />";
+      str=str+"快递状态 "+resp.status+"<br />";
+      
+      str=str+"<table id='result'><thead><tr><th width='100px'>编号</th><th width='100px'>名称</th><th width='100px'>时间</th><th width='300px'>action</th></tr></thead><tbody>";
+      for (var i=0; i<resp.checkouts.length; i++)
+      {
+        str=str+"<tr>";
+        str=str+"<td>"+resp.checkouts[i].checker.id+"</td>";
+        str=str+"<td>"+resp.checkouts[i].checker.name+"</td>";
+        str=str+"<td>"+resp.checkouts[i].checktime+"</td>";
+        str=str+"<td>"+resp.checkouts[i].action+"</td>";
+        str=str+"</tr>";
+      }
+      str=str+("</tbody></table>");
+
+      $("div#content_result").html(str);
+      $('#result tbody>tr:odd').addClass("table_odd");
+      $('#result tbody>tr:even').addClass("table_even");
+      $('div#content_result').show();
+  });
+}
+</script>
+</body>
+</html>
