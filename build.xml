@@ -73,7 +73,7 @@
   </target>
 
   <target name="init-gendeploy" description="生成指向配置文件, 用于 tomcat 的引用部署">
-    <echo file="${ant.project.name}.xml">&lt;-- note: copy this file to your ANT_HOME/conf/Catalina/localhost(or other as your actual) to deploy --&gt;
+    <echo file="${ant.project.name}.xml">&lt;!-- note: copy this file to your ANT_HOME/conf/Catalina/localhost(or other as your actual) to deploy --&gt;
 &lt;Context docBase="${basedir}\web"&gt;
 &lt;/Context&gt;
     </echo>
