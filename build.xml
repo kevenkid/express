@@ -108,6 +108,18 @@
     </copy>
   </target>
 
+  <!-- 部署 -->
+  <target name="deploy" description="测试环境部署">
+    <echo>Make sure you configurated the database path, then press ENTER</echo>
+    <input />
+    <antcall target="build-all" />
+    <echo>Make sure you configurated the CATALINA_HOME, then press ENTER</echo>
+    <input />
+    <antcall target="init-gendeploy" />
+    <move file="${ant.project.name}.xml" todir="${env.CATALINA_HOME}/conf/Catalina/localhost" overwrite="true" />
+    <echo>OK, run your catalina now.</echo>
+  </target>
+
   <!-- 生成javadoc -->
   <target name="javadoc" description="生成javadoc">
     <javadoc sourcepath="${srcdir}" destdir="${javadocdir}" private="true" classpathref="classpath"/>
