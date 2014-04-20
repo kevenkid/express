@@ -6,7 +6,6 @@
 }
 #header span {
 	float:right;
-	width:80px; 
 	height:30px; 
 	color:#FFFFFF; 
 	margin:0 30px; 
@@ -47,7 +46,7 @@
 	margin-left:10px; 
 }
 #query{
-	width:300px; 
+	width:250px; 
 	margin:0px auto;
 }
 #result{

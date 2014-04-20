@@ -8,6 +8,7 @@
 </head>
 <body>
 <div id="header">
+	<span id="login_exit">退出</span>
 	<span id="login">登录</span>
 	<div id="login_table">
 	<table>
@@ -21,7 +22,7 @@
 		</tr>
 		<tr>
 			<th></th>
-			<td><button id="login_in" onclick="login()">确定</button></td>
+			<td><button id="login_in" onclick="login()">登录</button></td>
 		</tr>
 	</table>
 	</div>
@@ -29,7 +30,7 @@
 <div id="content">
 	<fieldset id="content_query">
 		<legend>请输入编号：</legend>
-		<input type="text" id="query"><button onclick="show();">确定</button>
+		<input type="text" id="query"><button onclick="show();">确定</button><button id="delay" onclick="delay();">删除</button>
 	</fieldset>
 	<br/>
 	<div id="content_result">
@@ -38,9 +39,17 @@
 </div>
 <script>
 $(function(){
-	$('#content_result').hide();
+	$('#login_exit').hide();
+	$('#content_result').hide(); 
+	$('#delay').hide();
 	$('#login').click(function(e){
 		$('#login_table').slideToggle();
+	});
+	$('#login_exit').click(function(e){
+		$('#login').html('登录');
+		$('#login_in').html('登录'); 
+		$('#login_exit').hide(); 
+		$('#delay').hide();
 	});
 });
 
@@ -51,15 +60,31 @@ function login(){
       uid:$("input#username").val(),
       pass:$("input#password").val()
     }
-  ).done(/*here goes your callback */);
+  )
+  .done(loginSuccess)
+  .fail(loginFail)
+}
+
+function loginSuccess(resp) {
+	$('#login').html("欢迎你, " + resp.name);
+	$('#login_in').html('重新登录');
+	$('#login_exit').show();   
+	$('#login_table').hide();
+	$('#delay').show();
+}
+
+function loginFail() {
+	alert("对不起,用户名不存在或密码错误,请检测后再重试!");
 }
 
 function show(){
   $.get(
     "parcel/query",
     {code:$("input#query").val()}
-  ).done(
-    function(resp){
+  ).done(search);
+}
+
+function search(resp){
       var str = new String();
       str=str+"快递单号 "+resp.code+"<br />";
       str=str+"快递状态 "+resp.status+"<br />";
@@ -80,7 +105,13 @@ function show(){
       $('#result tbody>tr:odd').addClass("table_odd");
       $('#result tbody>tr:even').addClass("table_even");
       $('div#content_result').show();
-  });
+}
+
+function delay() {
+	$.get(
+	 "parcel/disable",
+	 {code:$("input#query").val()}
+	).done(show);
 }
 </script>
 </body>

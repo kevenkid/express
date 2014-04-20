@@ -66,6 +66,8 @@ public class DisableParcel extends HttpServlet
             ParcelController.disable(code);
 
             HiberDao.commit();
+
+            out.println("{}");
         }
         catch (IllegalStateException ex)
         {

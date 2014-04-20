@@ -73,6 +73,8 @@ public class Login extends HttpServlet
 
             session.setAttribute(UID, u.id);
             session.setAttribute(PASS, u.pass);
+
+            out.println(JSON.toJSONString(u));
         }
         catch (EntityNotFoundException ex)
         {
