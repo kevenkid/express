@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
-	<title>伟和快运</title>
+	<title>物流信息管理系统</title>
 	<link rel="stylesheet" href="css/style.css" type="text/css"/>
 	<script src="js/jquery-1.10.2.js" type="text/javascript"></script>
 </head>
@@ -29,8 +29,8 @@
 </div>
 <div id="content">
 	<fieldset id="content_query">
-		<legend>请输入编号：</legend>
-		<input type="text" id="query"><button onclick="show();">确定</button><button id="delay" onclick="delay();">删除</button>
+		<legend>请输入运单号：</legend>
+		<input type="text" id="query"><button onclick="show();">确定</button><button id="delay" onclick="delay();">中止</button>
 	</fieldset>
 	<br/>
 	<div id="content_result">
@@ -55,7 +55,7 @@ $(function(){
 
 function login(){
   $.get(
-    "users/login",
+	"users/login",
     {
       uid:$("input#username").val(),
       pass:$("input#password").val()
@@ -70,7 +70,9 @@ function loginSuccess(resp) {
 	$('#login_in').html('重新登录');
 	$('#login_exit').show();   
 	$('#login_table').hide();
-	$('#delay').show();
+	if(resp.utype == 'Admin') {
+		$('#delay').show();
+	}
 }
 
 function loginFail() {
@@ -81,7 +83,9 @@ function show(){
   $.get(
     "parcel/query",
     {code:$("input#query").val()}
-  ).done(search);
+  )
+  .done(search)
+  .fail(function(){alert("对不起，查无此单！");})
 }
 
 function search(resp){
@@ -89,7 +93,7 @@ function search(resp){
       str=str+"快递单号 "+resp.code+"<br />";
       str=str+"快递状态 "+resp.status+"<br />";
       
-      str=str+"<table id='result'><thead><tr><th width='100px'>编号</th><th width='100px'>名称</th><th width='100px'>时间</th><th width='300px'>action</th></tr></thead><tbody>";
+      str=str+"<table id='result'><thead><tr><th width='100px'>快递员编号</th><th width='100px'>业务员</th><th width='100px'>操作时间</th><th width='300px'>操作</th></tr></thead><tbody>";
       for (var i=0; i<resp.checkouts.length; i++)
       {
         str=str+"<tr>";
@@ -108,10 +112,16 @@ function search(resp){
 }
 
 function delay() {
+	if (confirm("此记录将被消除，请确认")) {
+		delayQuery();
+	}
+}
+
+function delayQuery() {
 	$.get(
 	 "parcel/disable",
 	 {code:$("input#query").val()}
-	).done(show);
+	).done(show)
 }
 </script>
 </body>
