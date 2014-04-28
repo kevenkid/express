@@ -11,7 +11,7 @@ import com.github.cuter44.util.servlet.*;
 import com.alibaba.fastjson.*;
 import com.alibaba.fastjson.serializer.*;
 
-import com.github.kevenkid.express.users.dao.User;
+import com.github.kevenkid.express.users.dao.*;
 import com.github.kevenkid.express.users.core.*;
 
 /** µÇÂ¼
@@ -74,7 +74,16 @@ public class Login extends HttpServlet
             session.setAttribute(UID, u.id);
             session.setAttribute(PASS, u.pass);
 
-            out.println(JSON.toJSONString(u));
+            JSONObject j = new JSONObject();
+
+            j.put("id", u.id);
+            j.put("name", u.name);
+            if (u instanceof Admin)
+                j.put("utype", "Admin");
+            if (u instanceof Worker)
+                j.put("utype", "Worker");
+
+            out.println(j.toJSONString());
         }
         catch (EntityNotFoundException ex)
         {
